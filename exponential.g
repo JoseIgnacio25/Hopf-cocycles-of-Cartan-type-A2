@@ -41,7 +41,7 @@ end;
 
 #########################   DELTA CONSTRUCTION   #########################################
 
-############## First construct the gaussian C(a,b)_q #################
+############## First, construct the gaussian C(a,b)_q #################
 #Recall 1+q+...+q^{n-1}=0#
 SumOfPowers:= function(t)
 local i, sum;
@@ -66,7 +66,7 @@ C := function (x , y)
 return Prodt(x)/(Prodt(y)*Prodt(x-y));
 end;
 
-## Second construct coefficients of coproduct for fixed q ##
+## Second, construct coefficients of coproduct for fixed q ##
 Coef := function (a , j , b , k , l , c , m)
 return C(a , j)*C(b , k)*C(k , l)*C(c , m)*q^((a-j)*l+m*(b-k))*(1-(q*q))^(k-l)*(q)^((a-j)*k+m*(b+a-j-l)+(k-l-1)*(k-l)/2);
 end;
@@ -547,7 +547,10 @@ end;
 ################# truncated exponential up to 2 t###################### 
 exponential2:=function(a,b,c,A,B,C)
 local e, w, p, u, D, t, v;
-D:=zero;
+if (a=0) and (b=0) and (c=0) and (A=0) and (B=0) and (C=0) then
+return [[[]],[F1]];
+fi;
+D:=zero; 
 p:=StrongNormalFormNP(MulNP(MulNP(LeftX2(a),LeftX12(b)),LeftX1(0,0,c)),GX);
 u:=StrongNormalFormNP(MulNP(MulNP(LeftX2(A),LeftX12(B)),LeftX1(0,0,C)),GX);
 t:=[p[1],[1]];
@@ -561,6 +564,9 @@ end;
 ################# truncated exponential up to 3 ###################### 
 exponential3:=function(a,b,c,A,B,C)
 local e, w, p, u, D, t, v, r;
+if (a=0) and (b=0) and (c=0) and (A=0) and (B=0) and (C=0) then
+return [[[]],[F1]];
+fi;
 D:=zero;
 p:=StrongNormalFormNP(MulNP(MulNP(LeftX2(a),LeftX12(b)),LeftX1(0,0,c)),GX);
 u:=StrongNormalFormNP(MulNP(MulNP(LeftX2(A),LeftX12(B)),LeftX1(0,0,C)),GX);
@@ -576,6 +582,9 @@ end;
 ################# truncated exponential up to 4 ###################### 
 exponential4:=function(a,b,c,A,B,C)
 local e, w, p, u, D, t, v, r, s;
+if (a=0) and (b=0) and (c=0) and (A=0) and (B=0) and (C=0) then
+return [[[]],[F1]];
+fi;
 D:=zero;
 p:=StrongNormalFormNP(MulNP(MulNP(LeftX2(a),LeftX12(b)),LeftX1(0,0,c)),GX);
 u:=StrongNormalFormNP(MulNP(MulNP(LeftX2(A),LeftX12(B)),LeftX1(0,0,C)),GX);
@@ -592,6 +601,9 @@ end;
 ################# truncated exponential up to 5 ######################
 exponential:=function(a,b,c,A,B,C)
 local e, w, p, u, D, t, v, r, s,j;
+if (a=0) and (b=0) and (c=0) and (A=0) and (B=0) and (C=0) then
+return [[[]],[F1]];
+fi;
 D:=zero;
 p:=StrongNormalFormNP(MulNP(MulNP(LeftX2(a),LeftX12(b)),LeftX1(0,0,c)),GX);
 u:=StrongNormalFormNP(MulNP(MulNP(LeftX2(A),LeftX12(B)),LeftX1(0,0,C)),GX);
