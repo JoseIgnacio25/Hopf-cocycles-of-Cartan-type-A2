@@ -23,9 +23,9 @@ X2:=[[[1]],[1]];;
 X12:=[[[2]],[1]];;
 X1:=[[[3]],[1]];;
 
-#########################   Coefficient in coproduct CONSTRUCTION   #########################
+#########################   Coefficients in coproduct  #########################
 
-############## First construct the gaussian C(a,b)_q #################
+############## Gaussian C(a,b)_q #################
 #Recall 1+q+...+q^{n-1}=0#
 SumOfPowers:= function(t)
 local i, sum;
@@ -50,12 +50,12 @@ C := function (x , y)
 return Prodt(x)/(Prodt(y)*Prodt(x-y));
 end;
 
-############## Second construct coefficients of coproduct for fixed q ##############
+############## Coefficients of coproduct for fixed q ##############
 Coef := function (a , j , b , k , l , c , m)
 return C(a , j)*C(b , k)*C(k , l)*C(c , m)*(1-q^-1)^(k-l)*(q*q12)^((-1)*((a-j)*(k+m)+m*(b-l)+(k-l-1)*(k-l)/2))*q^((a-j)*l+m*(b-k));
 end;
 
-#########################   Caracteristic functions   #########################
+#########################   delta functions   #########################
 
 D:=function(t);
 if t in [0,n,2*n] then return F1;
@@ -82,7 +82,7 @@ else return 0;
 fi;
 end;
 
-#########################   Caracteristic sigma function   #########################
+#########################   Characteristic sigma function   #########################
 sigma1:=function(n2,n12,n1,s,m2,m12,m1)
 local k;
 k:=C(n1,s)*C(m2,s)*Prodt(s)*q12^(n1*m2-s*(s+1)/2)*(q*q12)^(n12*(m2-s)+m12*(n1-s))*D(n12+m12+s)*d(n2+m2-s)*d(n1+m1-s)*l2^(exponent_d(n2+m2-s))*l12^(exponent_D(n12+m12+s))*l1^(exponent_d(n1+m1-s));
@@ -266,4 +266,5 @@ elif (n<n12+n1 or n=n12+n1) and (n<m12+m1 or n=m12+m1) and (m2<n1) then
 else L1:=L1;
 fi;
 return L1;
+
 end;
