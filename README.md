@@ -7,7 +7,7 @@ When the quantum Serre relations are deformed, we characterize those cocycles th
 We identify some hypotheses that allow us to present general formulas that apply in our setting.
 
 
-### About the files
+### About the GAP files
 
 - [generic.g](https://github.com/JoseIgnacio25/Hopf-cocycles-of-Cartan-type-A2/blob/main/generic.g): This code computes the values of the cocycle $\sigma_{\boldsymbol{\lambda}}$ associated with generic deformations of type $A_2$, with parameter $q$, a primitive root of unity of order $n \geq 3$. The code is preconfigured with $n = 3$, but it can be set to any $n \geq 3$.
 The function "tigma(n2, n12, n1, m2, m12, m1)" returns the value $\sigma_{\boldsymbol{\lambda}}\big(x_2^{n_2} x_{12}^{n_{12}} x_1^{n_1}, x_2^{m_2} x_{12}^{m_{12}} x_1^{m_1}\big)$, provided that $n_2, n_{12}, n_1, m_2, m_{12}, m_1\in \mathbb{I}_{N-1}^\circ$. This function covers every possible case in
