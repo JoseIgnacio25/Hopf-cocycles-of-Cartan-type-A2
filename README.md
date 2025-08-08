@@ -4,7 +4,7 @@
 
 We compute the Hopf 2-cocycles involved in the classification of pointed Hopf algebras of diagonal type $A_2$. 
 When the quantum Serre relations are deformed, we characterize those cocycles that can be recovered from Hochschild cohomology, via exponentiation.
-We identify some hypotheses that allow us to present general formulas that apply in our setting.6
+We identify some hypotheses that allow us to present general formulas that apply in our setting.
 
 
 ### About the files
