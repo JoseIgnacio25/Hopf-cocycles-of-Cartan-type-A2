@@ -266,5 +266,4 @@ elif (n<n12+n1 or n=n12+n1) and (n<m12+m1 or n=m12+m1) and (m2<n1) then
 else L1:=L1;
 fi;
 return L1;
-
 end;
