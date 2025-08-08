@@ -14,7 +14,7 @@ The function "tigma(n2, n12, n1, m2, m12, m1)" returns the value $\sigma_{\bolds
 
 $$\epsilon_0(\gamma_{\boldsymbol{\lambda}}(x_2^{n_2}x_{12}^{n_{12}}x_1^{n_1})\gamma_{\boldsymbol{\lambda}}(x_2^{m_2}x_{12}^{m_{12}}x_1^{m_1})).$$
 
-- `atypical.g`: This code computes the value of the cocycle $\sigma_{\boldsymbol{\lambda}}$ of Cartan type $A_2$, associated with atypical deformations, i.e., when the quantum Serre relations are deformed.
+- `atypical.g`: This code calculates the value of the cocycle $\sigma_{\boldsymbol{\lambda}}$ of Cartan type $A_2$, associated with atypical deformations, i.e., when the quantum Serre relations are deformed.
 The function "osigma(a, b, c, A, B, C)" returns the value of the cocycle on the basis element  $x_2^a x_{12}^b x_1^c \otimes x_2^A x_{12}^B x_1^C$ for $0 \leq a, b, c, A, B, C \leq 2$.  
 The computation is based on the description of the coproduct in the basis of the algebra $\mathfrak{B} \otimes \mathfrak{B}$ and subsequently applies the formula, for $x = x_2^a x_{12}^b x_1^c$ and $y = x_2^A x_{12}^B x_1^C$,
 
