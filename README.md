@@ -24,4 +24,4 @@ $$\alpha(x_{(1)}) \alpha(y_{(1)}) \sigma(x_{(2)}, y_{(2)}) \alpha^{-1}(x_{(3)} y
 The function "exponential(a, b, c, A, B, C)" returns the value  $e^\eta(x_2^{a} x_{12}^{b} x_1^{c},\; x_2^{A} x_{12}^{B} x_1^{C})$ for $0 \leq a, b, c, A, B, C \leq 2$.  
 Its computation is based on describing the coproduct $\Delta^k$ for $k=1,2,3,4$ and applying the formula for the exponential of $\eta$. The code also includes the truncated versions of the exponential: exponential2, ..., exponential4.
 
-For more details, see preprint [ArXiv](https://arxiv.org/user/).
+For more details, see preprint [ArXiv](https://arxiv.org/abs/2508.06648).
