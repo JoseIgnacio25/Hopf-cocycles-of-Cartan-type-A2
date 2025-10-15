@@ -188,13 +188,40 @@ end;
 ## Fix Grobner Basis for Nichols algebra ##
 GX:= GBX(n);;
 
+#############################################################
 
+###### Ideal generators and Grobner basis for Nichols algebra with q12=q21=q ######
+quantumX:=function(n)
+local r3,m112,m122,L;
+r3:=AddNP(X12,AddNP(MulNP(X1,X2),MulNP(X2,X1),F1,-q*F1),F1,s);
+m112:=AddNP(MulNP(X1,X12),MulNP(X12,X1),F1,-q*q*F1);
+m122:=AddNP(MulNP(X12,X2),MulNP(X2,X12),F1,-q*q*F1);
+L:=[r3,m112,m122];
+return SGrobner(L);
+end;
+
+## Fix Grobner Basis for Nichols algebra ##
+GXQS:= quantumX(n);;
+
+
+#############################################################
+
+###### Ideal generators and Grobner basis for Nichols algebra with q12=q21=q ######
+r12X:=function(n)
+local r3,L;
+r3:=AddNP(X12,AddNP(MulNP(X1,X2),MulNP(X2,X1),F1,-q*F1),F1,s);
+L:=[r3];
+return SGrobner(L);
+end;
+
+## Fix Grobner Basis for Nichols algebra ##
+R12X:= r12X(n);;
 
 ################### Hochschild cocycles ####################
 
 ######################### Definitions of coboundaries concentrated in degree 3 and concentrated in degree 6  #########################
 ##### Coboundary values ######
-Cob:=function(b);
+Et_pre1:=function(b);
 if b=[[[ ]],[1]] then return zero;
 elif b=[[[1,3,3]],[1]] then return [[[]],[b211*s]];
 elif b=[[[1,1,3]],[1]] then return [[[]],[b221*s]];
@@ -204,59 +231,65 @@ elif b=[[[1,1,2,3,3]],[1]] then return [[[]],[b221211*s]];
 elif b=[[[2,2,3,3]],[1]] then return [[[]],[b121211*s]];
 elif b=[[[1,1,2,2]],[1]] then return [[[]],[b221212*s]];
 elif b=[[[1,2,2,3]],[1]] then return [[[]],[b212121*s]];
+elif b=[[[1,1,1]],[1]] then return [[[]],[e2*F1]];
+elif b=[[[3,3,3]],[1]] then return [[[]],[e1*F1]];
+elif b=[[[2,2,2]],[1]] then return [[[]],[e12*F1]];
 else return zero;
 fi;
 end;
 
-###### Linearization of Cob #######
-LCob:=function(v)
+Et_pre2:=function(b);
+if b=[[[ ]],[1]] then return zero;
+elif b=[[[3,2]],[1]] then return [[[]],[e112*F1]];
+elif b=[[[2,1]],[1]] then return [[[]],[e122*F1]];
+else return zero;
+fi;
+end;
+
+###### Linearization of Et-pre1 #######
+LCob1:=function(v)
 local L,t,j;
 L:=zero;
 t:=Length(v[1]);
 for j in[1..t] do
-	L:=AddNP(L,MulNP(Cob([[v[1][j]],[1]]),[[[]],[v[2][j]]]),F1,F1);
+	L:=AddNP(L,MulNP(Et_pre1([[v[1][j]],[1]]),[[[]],[v[2][j]]]),F1,F1);
+od;
+return L;
+end;
+
+###### Linearization of Cob #######
+LCob2:=function(v)
+local L,t,j;
+L:=zero;
+t:=Length(v[1]);
+for j in[1..t] do
+	L:=AddNP(L,MulNP(Et_pre2([[v[1][j]],[1]]),[[[]],[v[2][j]]]),F1,F1);
 od;
 return L;
 end;
 
 
-################# Definition of coboundary BX ########################
-BX:=function(v,w);
+################# Definition of cocycle EtX1 ########################
+EtX1:=function(v,w);
 if v[1]=[[ ]] or w[1]=[[ ]] then
 return zero;
-else return LCob(StrongNormalFormNP(MulNP(v,w),GX));
+else return LCob1(StrongNormalFormNP(MulNP(v,w),GXQS));
 fi;
 end;
 
-############### Definition of cocycle Eta without coboundary ##########################
-eta:=function(v,w);
+################# Definition of cocycle EtX2 ########################
+EtX2:=function(v,w);
 if v[1]=[[ ]] or w[1]=[[ ]] then
 return zero;
-elif v=[[[1]],[1]] and w=[[[1,1]],[1]] then return [[[]],[e2*F1]];
-elif v=[[[1,1]],[1]] and w=[[[1]],[1]] then return [[[]],[e2*F1]];
-elif v=[[[3]],[1]] and w=[[[3,3]],[1]] then return [[[]],[e1*F1]];
-elif v=[[[3,3]],[1]] and w=[[[3]],[1]] then return [[[]],[e1*F1]];
-elif v=[[[2]],[1]] and w=[[[2,2]],[1]] then return [[[]],[e12*F1]];
-elif v=[[[2,2]],[1]] and w=[[[2]],[1]] then return [[[]],[e12*F1]];
-elif v=[[[3]],[1]] and w=[[[1,2,2]],[1]] then return [[[]],[e12*F1]];
-elif v=[[[2,2,3]],[1]] and w=[[[1]],[1]] then return [[[]],[e12*F1]];
-elif v=[[[2,3]],[1]] and w=[[[1,2]],[1]] then return [[[]],[e12*F1]];
-elif v=[[[2,3,3]],[1]] and w=[[[1,1]],[1]] then return [[[]],[e12*s]];
-elif v=[[[3,3]],[1]] and w=[[[1,1,2]],[1]] then return [[[]],[e12*s]];
-elif v=[[[3,3]],[1]] and w=[[[1]],[1]] then return [[[]],[e112*F1]];
-elif v=[[[3]],[1]] and w=[[[2]],[1]] then return [[[]],[e112*F1]];
-elif v=[[[3]],[1]] and w=[[[1,1]],[1]] then return [[[]],[e122*F1]];
-elif v=[[[2]],[1]] and w=[[[1]],[1]] then return [[[]],[e122*F1]];
-else return zero;
+else return LCob2(StrongNormalFormNP(MulNP(v,w),R12X));
 fi;
 end;
-
 
 
 
 ################# 1Conmmutation_left: eta(x,y_1z_1)eta(y_2,z_2) #################
-1CLeft:=function(a1,b1,c1,a,b,c,A,B,C)
-local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V, t, v, u, w,T1,x,O1;
+1Conmmutation_left:=function(a1,b1,c1,a,b,c,A,B,C)
+local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,x,O1;
 D:=zero;
 	for j in [0..a] do 
 	for k in [0..b] do
@@ -272,17 +305,12 @@ D:=zero;
 			P1:=StrongNormalFormNP(MulNP(MulNP(LeftX2(J),LeftX12(L)),LeftX1(K,L,M)),GX);
 			p2:=StrongNormalFormNP(MulNP(MulNP(RightX2(a,j,k,l),RightX12(b,k)),RightX1(c,m)),GX);
 			P2:=StrongNormalFormNP(MulNP(MulNP(RightX2(A,J,K,L),RightX12(B,K)),RightX1(C,M)),GX);
-			t:=[p1[1],[1]];
-			v:=[P1[1],[1]];
-			u:=[p2[1],[1]];
-			w:=[P2[1],[1]];
-			T1:=MulNP(t,v);
 			O1:=MulNP(p1,P1);
-			T:=eta([x[1],[1]],T1);
-			V:=eta(u,w);
-			O:=BX(x,O1);
-			R:=BX(p2,P2);
-			D:=AddNP(D,MulNP(AddNP(T,O,F1,F1),AddNP(V,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
+			T:=EtX1(x,O1);
+			V:=EtX2(x,O1);
+			O:=EtX1(p2,P2);
+			R:=EtX2(p2,P2);
+			D:=AddNP(D,MulNP(AddNP(T,V,F1,F1),AddNP(O,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
 			else D:=D;
 			fi;
 	od;
@@ -299,8 +327,8 @@ end;
 
 
 ################# 1Conmmutation_right: eta(y_1,z_1)eta(x,y_2z_2) #################
-1CRight:=function(a1,b1,c1,a,b,c,A,B,C)
-local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V, t, v, u, w,T2,O2,x;
+1Conmmutation_right:=function(a1,b1,c1,a,b,c,A,B,C)
+local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,O2,x;
 D:=zero;
 	for j in [0..a] do 
 	for k in [0..b] do
@@ -316,17 +344,12 @@ D:=zero;
 			P1:=StrongNormalFormNP(MulNP(MulNP(LeftX2(J),LeftX12(L)),LeftX1(K,L,M)),GX);
 			p2:=StrongNormalFormNP(MulNP(MulNP(RightX2(a,j,k,l),RightX12(b,k)),RightX1(c,m)),GX);
 			P2:=StrongNormalFormNP(MulNP(MulNP(RightX2(A,J,K,L),RightX12(B,K)),RightX1(C,M)),GX);
-			t:=[p1[1],[1]];
-			v:=[P1[1],[1]];
-			u:=[p2[1],[1]];
-			w:=[P2[1],[1]];
-			T2:=MulNP(u,w);
 			O2:=MulNP(p2,P2);
-			T:=eta(t,v);
-			V:=eta([x[1],[1]],T2);
-			O:=BX(p1,P1);
-			R:=BX(x,O2);
-			D:=AddNP(D,MulNP(AddNP(T,O,F1,F1),AddNP(V,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
+			T:=EtX1(x,O2);
+			V:=EtX2(x,O2);
+			O:=EtX1(p1,P1);
+			R:=EtX2(p1,P1);
+			D:=AddNP(D,MulNP(AddNP(T,V,F1,F1),AddNP(O,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
 			else D:=D;
 			fi;
 	od;
@@ -340,16 +363,13 @@ D:=zero;
 return D;
 end;
 
-
-1Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
-return AddNP(1CLeft(a1,b1,c1,a,b,c,A,B,C),1CRight(a1,b1,c1,a,b,c,A,B,C),F1,s);
+1pre_Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
+return AddNP(1Conmmutation_left(a1,b1,c1,a,b,c,A,B,C),1Conmmutation_right(a1,b1,c1,a,b,c,A,B,C),F1,s);
 end;
 
-
-
 ################# 2Conmmutation_left: eta(x_1y_1,z)eta(x_2,y_2) #################
-2CLeft:=function(a1,b1,c1,a,b,c,A,B,C)
-local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V, t, v, u, w,T1,x,O1;
+2Conmmutation_left:=function(a1,b1,c1,a,b,c,A,B,C)
+local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,x,O1;
 D:=zero;
 	for j in [0..a] do 
 	for k in [0..b] do
@@ -365,17 +385,12 @@ D:=zero;
 			P1:=StrongNormalFormNP(MulNP(MulNP(LeftX2(J),LeftX12(L)),LeftX1(K,L,M)),GX);
 			p2:=StrongNormalFormNP(MulNP(MulNP(RightX2(a,j,k,l),RightX12(b,k)),RightX1(c,m)),GX);
 			P2:=StrongNormalFormNP(MulNP(MulNP(RightX2(A,J,K,L),RightX12(B,K)),RightX1(C,M)),GX);
-			t:=[p1[1],[1]];
-			v:=[P1[1],[1]];
-			u:=[p2[1],[1]];
-			w:=[P2[1],[1]];
-			T1:=MulNP(t,v);
 			O1:=MulNP(p1,P1);
-			T:=eta(T1,[x[1],[1]]);
-			V:=eta(u,w);
-			O:=BX(O1,x);
-			R:=BX(p2,P2);
-			D:=AddNP(D,MulNP(AddNP(T,O,F1,F1),AddNP(V,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
+			T:=EtX1(O1,x);
+			V:=EtX2(O1,x);
+			O:=EtX1(p2,P2);
+			R:=EtX2(p2,P2);
+			D:=AddNP(D,MulNP(AddNP(T,V,F1,F1),AddNP(O,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
 			else D:=D;
 			fi;
 	od;
@@ -392,8 +407,8 @@ end;
 
 
 ################# 2Conmmutation_right: eta(x_1,y_1)eta(x_2y_2,z) #################
-2CRight:=function(a1,b1,c1,a,b,c,A,B,C)
-local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V, t, v, u, w,T2,O2,x;
+2Conmmutation_right:=function(a1,b1,c1,a,b,c,A,B,C)
+local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,O2,x;
 D:=zero;
 	for j in [0..a] do 
 	for k in [0..b] do
@@ -409,17 +424,12 @@ D:=zero;
 			P1:=StrongNormalFormNP(MulNP(MulNP(LeftX2(J),LeftX12(L)),LeftX1(K,L,M)),GX);
 			p2:=StrongNormalFormNP(MulNP(MulNP(RightX2(a,j,k,l),RightX12(b,k)),RightX1(c,m)),GX);
 			P2:=StrongNormalFormNP(MulNP(MulNP(RightX2(A,J,K,L),RightX12(B,K)),RightX1(C,M)),GX);
-			t:=[p1[1],[1]];
-			v:=[P1[1],[1]];
-			u:=[p2[1],[1]];
-			w:=[P2[1],[1]];
-			T2:=MulNP(u,w);
 			O2:=MulNP(p2,P2);
-			T:=eta(t,v);
-			V:=eta(T2,[x[1],[1]]);
-			O:=BX(p1,P1);
-			R:=BX(O2,x);
-			D:=AddNP(D,MulNP(AddNP(T,O,F1,F1),AddNP(V,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
+			T:=EtX1(O2,x);
+			V:=EtX2(O2,x);
+			O:=EtX1(p1,P1);
+			R:=EtX2(p1,P1);
+			D:=AddNP(D,MulNP(AddNP(T,V,F1,F1),AddNP(O,R,F1,F1)),F1,Coef(a , j , b , k , l , c , m)*Coef(A , J , B , K , L , C , M)*braiding(a-j+k-l,b-k,c-m,J,L,K-L+M));
 			else D:=D;
 			fi;
 	od;
@@ -433,6 +443,6 @@ D:=zero;
 return D;
 end;
 
-2Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
-return AddNP(2CLeft(a1,b1,c1,a,b,c,A,B,C),2CRight(a1,b1,c1,a,b,c,A,B,C),F1,s);
+2pre_Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
+return AddNP(2Conmmutation_left(a1,b1,c1,a,b,c,A,B,C),2Conmmutation_right(a1,b1,c1,a,b,c,A,B,C),F1,s);
 end;
