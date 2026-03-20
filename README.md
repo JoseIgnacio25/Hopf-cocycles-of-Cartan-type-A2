@@ -24,4 +24,9 @@ $$\alpha(x_{(1)}) \alpha(y_{(1)}) \sigma(x_{(2)}, y_{(2)}) \alpha^{-1}(x_{(3)} y
 The function "exponential(a, b, c, A, B, C)" returns the value  $e^\eta(x_2^{a} x_{12}^{b} x_1^{c},\; x_2^{A} x_{12}^{B} x_1^{C})$ for $0 \leq a, b, c, A, B, C \leq 2$.  
 Its computation is based on describing the coproduct $\Delta^k$ for $k=1,2,3,4$ and applying the formula for the exponential of $\eta$. The code also includes the truncated versions of the exponential: exponential2, ..., exponential4.
 
+- [commutations.g](https://github.com/JoseIgnacio25/Hopf-cocycles-of-Cartan-type-A2/blob/main/commutations.g):  This code calculates the possible differences between the members of the commutation equations for a 2-cocycle $\eta$ in the atypical $A_2$ case.
+The functions "1Comparison(a1, b1, c1, a, b, c, A, B, C)" and "2Comparison(a1, b1, c1, a, b, c, A, B, C)" return the scalar resulting from evaluating the difference between the left and right sides of the commutation identities on the basis elements $x=x_2^{a_1}x_{12}^{b_1}x_1^{c_1}$, $y=x_2^{a}x_{12}^{b}x_1^{c}$, and $z=x_2^{A}x_{12}^{B}x_1^{C}$. The computation is based on the recursive application of the coproduct $\Delta$ to determine the values of terms such as 
+$$\eta(x, y_{(1)}z_{(1)})\eta(y_{(2)}, z_{(2)}),\quad \eta(y_{(1)}, z_{(1)})\eta(x, y_{(2)}z_{(2)}),\quad$$
+$$\eta(y_{(1)}z_{(1)},x)\eta(y_{(2)}, z_{(2)}) \quad \text{and} \quad \eta(y_{(1)}, z_{(1)})\eta(y_{(2)}z_{(2)},x).$$
+
 For more details, see preprint [ArXiv](https://arxiv.org/abs/2508.06648).
