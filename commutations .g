@@ -72,7 +72,7 @@ return C(a , j)*C(b , k)*C(k , l)*C(c , m)*q^((a-j)*l+m*(b-k))*(1-(q*q))^(k-l)*(
 end;
 
 
-### Multiplier of generator function ###
+### Multiplier of generator ###
 
 LeftX1:=function(K,L,M)
 local s, t, t1;
@@ -190,7 +190,7 @@ GX:= GBX(n);;
 
 #############################################################
 
-###### Ideal generators and Grobner basis for Nichols algebra with q12=q21=q ######
+###### Ideal generators and Grobner basis for preNichols algebra with q12=q21=q ######
 quantumX:=function(n)
 local r3,m112,m122,L;
 r3:=AddNP(X12,AddNP(MulNP(X1,X2),MulNP(X2,X1),F1,-q*F1),F1,s);
@@ -200,7 +200,7 @@ L:=[r3,m112,m122];
 return SGrobner(L);
 end;
 
-## Fix Grobner Basis for Nichols algebra ##
+## Fix Grobner Basis for preNichols algebra ##
 GXQS:= quantumX(n);;
 
 
@@ -214,13 +214,12 @@ L:=[r3];
 return SGrobner(L);
 end;
 
-## Fix Grobner Basis for Nichols algebra ##
+## Fix Grobner Basis ##
 R12X:= r12X(n);;
 
 ################### Hochschild cocycles ####################
 
-######################### Definitions of coboundaries concentrated in degree 3 and concentrated in degree 6  #########################
-##### Coboundary values ######
+######################### Definitions of pre-Hochschild cocycles concentrated in degree 3 and concentrated in degree 6  #########################
 Et_pre1:=function(b);
 if b=[[[ ]],[1]] then return zero;
 elif b=[[[1,3,3]],[1]] then return [[[]],[b211*s]];
@@ -257,7 +256,7 @@ od;
 return L;
 end;
 
-###### Linearization of Cob #######
+###### Linearization of Et-pre2 #######
 LCob2:=function(v)
 local L,t,j;
 L:=zero;
@@ -288,7 +287,7 @@ end;
 
 
 ################# 1Conmmutation_left: eta(x,y_1z_1)eta(y_2,z_2) #################
-1Conmmutation_left:=function(a1,b1,c1,a,b,c,A,B,C)
+1CLeft:=function(a1,b1,c1,a,b,c,A,B,C)
 local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,x,O1;
 D:=zero;
 	for j in [0..a] do 
@@ -327,7 +326,7 @@ end;
 
 
 ################# 1Conmmutation_right: eta(y_1,z_1)eta(x,y_2z_2) #################
-1Conmmutation_right:=function(a1,b1,c1,a,b,c,A,B,C)
+1CRight:=function(a1,b1,c1,a,b,c,A,B,C)
 local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,O2,x;
 D:=zero;
 	for j in [0..a] do 
@@ -363,12 +362,12 @@ D:=zero;
 return D;
 end;
 
-1pre_Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
-return AddNP(1Conmmutation_left(a1,b1,c1,a,b,c,A,B,C),1Conmmutation_right(a1,b1,c1,a,b,c,A,B,C),F1,s);
+1Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
+return AddNP(1CLeft(a1,b1,c1,a,b,c,A,B,C),1CRight(a1,b1,c1,a,b,c,A,B,C),F1,s);
 end;
 
 ################# 2Conmmutation_left: eta(x_1y_1,z)eta(x_2,y_2) #################
-2Conmmutation_left:=function(a1,b1,c1,a,b,c,A,B,C)
+2CLeft:=function(a1,b1,c1,a,b,c,A,B,C)
 local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,x,O1;
 D:=zero;
 	for j in [0..a] do 
@@ -407,7 +406,7 @@ end;
 
 
 ################# 2Conmmutation_right: eta(x_1,y_1)eta(x_2y_2,z) #################
-2Conmmutation_right:=function(a1,b1,c1,a,b,c,A,B,C)
+2CRight:=function(a1,b1,c1,a,b,c,A,B,C)
 local j, k, l, m, J, K, L, M, D, p1, P1, p2, P2, O, R, T, V,O2,x;
 D:=zero;
 	for j in [0..a] do 
@@ -443,6 +442,6 @@ D:=zero;
 return D;
 end;
 
-2pre_Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
-return AddNP(2Conmmutation_left(a1,b1,c1,a,b,c,A,B,C),2Conmmutation_right(a1,b1,c1,a,b,c,A,B,C),F1,s);
+2Comparison:=function(a1,b1,c1,a,b,c,A,B,C);
+return AddNP(2CLeft(a1,b1,c1,a,b,c,A,B,C),2CRight(a1,b1,c1,a,b,c,A,B,C),F1,s);
 end;
